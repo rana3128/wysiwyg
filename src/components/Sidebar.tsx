@@ -1,35 +1,40 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
+import { ItemTypes } from './ItemTypes';
 
-interface SidebarProps {
-  addComponent: (component: any) => void;
-}
-
-const Sidebar: React.FC<SidebarProps> = ({ addComponent }) => {
-  const createDraggableItem = (type: string) => ({
-    type,
+const SidebarItem = ({ type, label }) => {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: ItemTypes.COMPONENT,
     item: { type },
-    collect: (monitor: any) => ({
-      isDragging: monitor.isDragging()
-    })
-  });
-
-  const [, dragCard] = useDrag(() => createDraggableItem('card'));
-  const [, dragHeader] = useDrag(() => createDraggableItem('header'));
-  const [, dragContent] = useDrag(() => createDraggableItem('content'));
-  const [, dragChart] = useDrag(() => createDraggableItem('chart'));
-  const [, dragTable] = useDrag(() => createDraggableItem('table'));
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
 
   return (
-    <div style={{ width: '200px', borderRight: '1px solid gray', padding: '10px' }}>
-      <h3>Components</h3>
-      <div ref={dragCard} style={{ cursor: 'pointer', padding: '5px' }}>Card</div>
-      <div ref={dragHeader} style={{ cursor: 'pointer', padding: '5px' }}>Header</div>
-      <div ref={dragContent} style={{ cursor: 'pointer', padding: '5px' }}>Content</div>
-      <div ref={dragChart} style={{ cursor: 'pointer', padding: '5px' }}>Chart</div>
-      <div ref={dragTable} style={{ cursor: 'pointer', padding: '5px' }}>Table</div>
+    <div
+      ref={drag}
+      style={{
+        opacity: isDragging ? 0.5 : 1,
+        cursor: 'move',
+        marginBottom: '10px',
+        padding: '10px',
+        backgroundColor: '#ddd',
+      }}
+    >
+      {label}
     </div>
   );
 };
+
+const Sidebar = () => (
+  <div className="sidebar">
+    <SidebarItem type="card" label="Card" />
+    <SidebarItem type="header" label="Header" />
+    <SidebarItem type="content" label="Content" />
+    <SidebarItem type="chart" label="Chart" />
+    <SidebarItem type="table" label="Table" />
+  </div>
+);
 
 export default Sidebar;

@@ -1,10 +1,8 @@
 import React from 'react';
-import { useDrop } from 'react-dnd';
-import Card from './Card';
+import Card from './Draggable/Card';
 
 interface LayoutProps {
-  components: ComponentType[];
-  addComponentToLayout: (component: Partial<ComponentType>) => void;
+  component: ComponentType;
   preview: boolean;
   removeComponent: (id: string) => void;
   setComponents: React.Dispatch<React.SetStateAction<ComponentType[]>>;
@@ -16,34 +14,20 @@ interface ComponentType {
   components: any[];
   position: { x: number; y: number };
   size: { width: number; height: number };
+  gridLayout: { i: string, x: number, y: number, w: number, h: number };
 }
 
-const Layout: React.FC<LayoutProps> = ({ components, addComponentToLayout, preview, removeComponent, setComponents }) => {
-  const [, drop] = useDrop({
-    accept: 'card',
-    drop: (item:any) => addComponentToLayout(item),
-  });
-
+const Layout: React.FC<LayoutProps> = ({ component, preview, removeComponent, setComponents }) => {
   return (
-    <div ref={drop} style={{ flex: 1, padding: '10px', position: 'relative', display: 'flex', flexWrap: 'wrap' }}>
-      {components.map((component, index) => {
-        if (component.type === 'card') {
-          return (
-            <Card 
-              key={index} 
-              id={index.toString()} 
-              preview={preview} 
-              removeComponent={() => removeComponent(index.toString())} 
-              components={component.components} 
-              setComponents={setComponents} 
-              position={component.position}
-              size={component.size}
-            />
-          );
-        }
-        return null;
-      })}
-    </div>
+    <Card
+      id={component.id.toString()}
+      preview={preview}
+      removeComponent={() => removeComponent(component.id.toString())}
+      components={component.components}
+      setComponents={setComponents}
+      position={component.position}
+      size={component.size}
+    />
   );
 };
 

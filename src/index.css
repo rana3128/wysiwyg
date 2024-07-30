@@ -1,0 +1,63 @@
+
+.layout {
+  height: 100% !important;
+  width: 100%;
+  position: relative;
+}
+
+.layout-top-btns-ctn {
+  display: flex;
+  gap: 10px;
+  height: 60px;
+  align-items: center;
+  padding-left: 30px;
+}
+
+.layout-top-btn {
+  position: relative;
+  border: none;
+  border-radius: 5px;
+  width: 80px;
+  height: 30px;
+  background-color: #5555cd;
+  color: white;
+  cursor: pointer;
+}
+
+input[type="file"]::file-selector-button {
+  border: none;
+  border-radius: 5px;
+  width: 100px;
+  height: 30px;
+  background-color: #5555cd;
+  color: white;
+  cursor: pointer;
+  padding: 0px 10px;
+}
+
+.remove-element-btn {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    z-index: 1;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    border: none;
+    background-color: #8b98a1;
+    color: white;
+    font-weight: 900;
+}
+
+.remove-element-btn-child {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 1;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    border: none;
+    background-color: #8b98a1;
+    color: white;
+}

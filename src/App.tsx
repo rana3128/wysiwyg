@@ -6,7 +6,7 @@ import Editor from './components/Editor';
 const App: React.FC = () => {
   return (
     <DndProvider backend={HTML5Backend}>
-      <div style={{ display: 'flex', height: '100vh' }}>
+      <div style={{ display: 'flex', height: '98vh' }}>
         <Editor />
       </div>
     </DndProvider>
