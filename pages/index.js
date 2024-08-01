@@ -9,6 +9,7 @@ import { Button } from '../components/user/Button';
 import { Card, CardBottom, CardTop } from '../components/user/Card';
 import { Container } from '../components/user/Container';
 import { Text } from '../components/user/Text';
+import { Chart } from '../components/user/Chart';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -32,6 +33,7 @@ export default function App() {
           Container,
           CardTop,
           CardBottom,
+          Chart,
         }}
       >
         <Topbar />
@@ -45,22 +47,9 @@ export default function App() {
                 background="#eeeeee"
                 data-cy="root-container"
               >
-                <Card data-cy="frame-card" />
-                <Button text="Click me" size="small" data-cy="frame-button" />
-                <Text fontSize={20} text="Hi world!" data-cy="frame-text" />
-                <Element
-                  canvas
-                  is={Container}
-                  padding={6}
-                  background="#999999"
-                  data-cy="frame-container"
-                >
-                  <Text
-                    size="small"
-                    text="It's me again!"
-                    data-cy="frame-container-text"
-                  />
-                </Element>
+
+                <Text fontSize={20} text="Hi world! Add more components" data-cy="frame-text" />
+
               </Element>
             </Frame>
           </Grid>

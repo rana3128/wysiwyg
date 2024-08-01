@@ -11,6 +11,8 @@ import { Button } from './user/Button';
 import { Card } from './user/Card';
 import { Container } from './user/Container';
 import { Text } from './user/Text';
+import { Chart } from './user/Chart';
+
 
 export const Toolbox = () => {
   const { connectors } = useEditor();
@@ -27,6 +29,15 @@ export const Toolbox = () => {
         <Box pb={2}>
           <Typography>Drag to add</Typography>
         </Box>
+        <Grid container direction="column" item>
+          <MaterialButton
+            ref={(ref) => connectors.create(ref, <Chart dataSource={0} />)}
+            variant="contained"
+            data-cy="toolbox-text"
+          >
+            Chart
+          </MaterialButton>
+        </Grid>
         <Grid container direction="column" item>
           <MaterialButton
             ref={(ref) =>
