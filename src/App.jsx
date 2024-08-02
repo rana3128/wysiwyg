@@ -2,7 +2,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider } from "@material-ui/core/styles";
 import React from "react";
 import theme from "../src/theme";
-import "./styles/main.css";
 import Root from "./Root";
 
 export default function MyApp() {

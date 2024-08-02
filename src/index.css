@@ -1,0 +1,24 @@
+body {
+  background: #f3f3f3 !important;
+}
+
+p {
+  margin: 2px 0;
+}
+
+fieldset.MuiFormControl-root {
+  margin-bottom: 20px;
+}
+
+*[draggable] {
+  cursor: move !important;
+}
+
+.cart-setting-panel{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}

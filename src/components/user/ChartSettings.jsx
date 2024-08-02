@@ -29,7 +29,7 @@ export const ChartSettings = () => {
     };
 
     return (
-        <div>
+        <div className='cart-setting-panel'>
             <FormLabel component="legend">Series URLs</FormLabel>
             {localSeriesUrls.map((url, index) => (
                 <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>

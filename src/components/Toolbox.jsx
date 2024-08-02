@@ -25,11 +25,12 @@ export const Toolbox = () => {
         alignItems="center"
         justify="center"
         spacing={1}
+        style={{padding: "10px"}}
       >
         <Box pb={2}>
           <Typography>Drag to add</Typography>
         </Box>
-        <Grid container direction="column" item>
+        <Grid container direction="column" item >
           <MaterialButton
             ref={(ref) => connectors.create(ref, <Chart dataSource={0} />)}
             variant="contained"
