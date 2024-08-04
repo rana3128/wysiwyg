@@ -5,7 +5,7 @@ import {
   Grid,
   Typography,
   Button as MaterialButton,
-} from '@material-ui/core';
+} from '@mui/material';
 import React from 'react';
 
 export const SettingsPanel = () => {
@@ -35,8 +35,8 @@ export const SettingsPanel = () => {
       <Grid container direction="column" spacing={0}>
         <Grid item>
           <Box pb={2}>
-            <Grid container alignItems="center" style={{padding: "5px 10px"}}>
-              <Grid item xs  >
+            <Grid container alignItems="center" style={{ padding: '5px 10px' }}>
+              <Grid item xs>
                 <Typography variant="subtitle1">Selected</Typography>
               </Grid>
               <Grid item>
@@ -55,9 +55,9 @@ export const SettingsPanel = () => {
         </div>
         {selected.isDeletable ? (
           <MaterialButton
-            style={{margin: "20px"}}
+            style={{ margin: '20px' }}
             variant="contained"
-            color="default"
+            color="primary"
             onClick={() => {
               actions.delete(selected.id);
             }}

@@ -1,7 +1,7 @@
-import Link from '@material-ui/core/Link';
-import SvgIcon from '@material-ui/core/SvgIcon';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import Link from '@mui/material/Link';
+import SvgIcon from '@mui/material/SvgIcon';
+import Typography from '@mui/material/Typography';
+import { makeStyles } from '@mui/styles';
 import React from 'react';
 
 function LightBulbIcon(props) {
@@ -28,10 +28,10 @@ export default function ProTip() {
     <Typography className={classes.root} color="textSecondary">
       <LightBulbIcon className={classes.lightBulb} />
       Pro tip: See more{' '}
-      <Link href="https://material-ui.com/getting-started/templates/">
+      <Link href="https://mui.com/getting-started/templates/">
         templates
       </Link>{' '}
-      on the Material-UI documentation.
+      on the MUI documentation.
     </Typography>
   );
 }

@@ -3,64 +3,69 @@ import { useNode } from '@craftjs/core';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { ChartSettings } from './ChartSettings';
+import { Collapse, IconButton } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import { mockFetchAvailableQueries, mockFetchSeriesData } from './mockServer';
 
-// Mock function to simulate API response
-const mockFetchSeriesData = (url) => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            const mockData = {
-                "https://api.example.com/series1": [1, 2, 3, 4, 5, 6],
-                "https://api.example.com/series2": [10, 20, 30, 40, 50, 60],
-                "https://api.example.com/series3": [100, 200, 300, 400, 500, 600],
-            };
-            resolve(mockData[url] || []);
-        }, 1000);
-    });
-};
+export const Chart = ({
+  queries = [],
+  selectedQuery = '',
+  aggregator = '',
+  serviceName = '',
+  title = 'Custom Chart',
+  isCollapsed = false,
+}) => {
+  const { connectors: { connect, drag } } = useNode();
+  const [seriesData, setSeriesData] = useState([]);
+  const [collapsed, setCollapsed] = useState(isCollapsed);
 
-export const Chart = ({ seriesUrls = [] }) => {
-    console.log(seriesUrls);
-    
-    const { connectors: { connect, drag } } = useNode();
-    const [seriesData, setSeriesData] = useState([]);
-
-    useEffect(() => {
-        
-        const fetchData = async () => {
-            const data = await Promise.all(seriesUrls.map(url => mockFetchSeriesData(url)));
-            setSeriesData(data);
-        };
-        fetchData();
-    }, [seriesUrls]);
-
-    const options = {
-        title: {
-            text: 'Custom Chart'
-        },
-        series: seriesData.map((data, index) => ({
-            name: `Series ${index + 1}`,
-            data: data
-        }))
+  useEffect(() => {
+    const fetchData = async () => {
+      if (selectedQuery && aggregator && serviceName) {
+        const payload = { query: selectedQuery, aggregator, serviceName };
+        const data = await mockFetchSeriesData(payload);
+        setSeriesData(data);
+      }
     };
+    fetchData();
+  }, [selectedQuery, aggregator, serviceName]);
 
-    return (
-        <div style={{ width: "90%", height: "250px" }} ref={ref => connect(drag(ref))}>
-            <HighchartsReact
-                highcharts={Highcharts}
-                options={options}
-            />
+  const options = {
+    title: { text: title },
+    series: [{
+      name: `${selectedQuery} - ${aggregator}`,
+      data: seriesData.map(d => d.count),
+    }],
+    xAxis: { categories: seriesData.map(d => `${d.time_from} - ${d.time_to}`) },
+  };
+
+  return (
+    <div ref={ref => connect(drag(ref))}>
+      <IconButton onClick={() => setCollapsed(!collapsed)} color='primary'>
+        {collapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+      </IconButton>
+      <Collapse in={!collapsed}>
+        <div style={{ width: '90%', height: '500px' }}>
+          <HighchartsReact highcharts={Highcharts} options={options} />
         </div>
-    );
+      </Collapse>
+    </div>
+  );
 };
-
 
 const ChartDefaultProps = {
-    seriesUrls: ["https://api.example.com/series1"]
+  queries: [],
+  selectedQuery: '',
+  aggregator: '',
+  serviceName: '',
+  title: 'Custom Chart',
+  isCollapsed: false,
 };
 
 Chart.craft = {
-    props: ChartDefaultProps,
-    related: {
-        settings: ChartSettings,
-    },
+  props: ChartDefaultProps,
+  related: {
+    settings: ChartSettings,
+  },
 };

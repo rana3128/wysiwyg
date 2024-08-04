@@ -1,5 +1,6 @@
 import { Editor, Frame, Element } from '@craftjs/core';
-import { Typography, Paper, Grid, makeStyles } from '@material-ui/core';
+import { Typography, Paper, Grid } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import React from 'react';
 
 import { SettingsPanel } from './components/SettingsPanel';
@@ -17,6 +18,7 @@ const useStyles = makeStyles(() => ({
     background: 'rgb(252, 253, 253)',
   },
 }));
+
 export default function Root() {
   const classes = useStyles();
 
@@ -47,9 +49,7 @@ export default function Root() {
                 background="#eeeeee"
                 data-cy="root-container"
               >
-
                 <Text fontSize={20} text="Hi world! Add more components" data-cy="frame-text" />
-
               </Element>
             </Frame>
           </Grid>

@@ -1,5 +1,5 @@
 import { useNode } from '@craftjs/core';
-import { Slider, FormControl, FormLabel } from '@material-ui/core';
+import { Slider, FormControl, FormLabel } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import ContentEditable from 'react-contenteditable';
 
@@ -61,7 +61,7 @@ const TextSettings = () => {
         <FormLabel component="legend">Font size</FormLabel>
         <Slider
           value={fontSize || 7}
-          step={7}
+          step={1}
           min={1}
           max={50}
           onChange={(_, value) => {

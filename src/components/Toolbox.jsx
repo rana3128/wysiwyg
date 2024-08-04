@@ -4,7 +4,7 @@ import {
   Typography,
   Grid,
   Button as MaterialButton,
-} from '@material-ui/core';
+} from '@mui/material';
 import React from 'react';
 
 import { Button } from './user/Button';
@@ -12,7 +12,6 @@ import { Card } from './user/Card';
 import { Container } from './user/Container';
 import { Text } from './user/Text';
 import { Chart } from './user/Chart';
-
 
 export const Toolbox = () => {
   const { connectors } = useEditor();
@@ -23,14 +22,14 @@ export const Toolbox = () => {
         container
         direction="column"
         alignItems="center"
-        justify="center"
+        justifyContent="center"
         spacing={1}
-        style={{padding: "10px"}}
+        style={{ padding: '10px' }}
       >
         <Box pb={2}>
           <Typography>Drag to add</Typography>
         </Box>
-        <Grid container direction="column" item >
+        <Grid container direction="column" item>
           <MaterialButton
             ref={(ref) => connectors.create(ref, <Chart dataSource={0} />)}
             variant="contained"

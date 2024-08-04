@@ -14,7 +14,7 @@ fieldset.MuiFormControl-root {
   cursor: move !important;
 }
 
-.cart-setting-panel{
+.chart-setting-panel{
     padding: 10px;
     display: flex;
     flex-direction: column;

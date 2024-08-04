@@ -1,3 +1,4 @@
+import React from 'react';
 import { useNode } from '@craftjs/core';
 import {
   Button as MaterialButton,
@@ -6,8 +7,7 @@ import {
   RadioGroup,
   Radio,
   FormControlLabel,
-} from '@material-ui/core';
-import React from 'react';
+} from '@mui/material';
 
 export const Button = ({ size, variant, color, text, ...props }) => {
   const {
@@ -102,7 +102,7 @@ export const ButtonSettings = () => {
           <FormControlLabel
             label="Secondary"
             value="secondary"
-            control={<Radio size="small" color="primary" />}
+            control={<Radio size="small" color="secondary" />}
           />
         </RadioGroup>
       </FormControl>

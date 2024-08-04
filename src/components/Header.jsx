@@ -4,7 +4,7 @@ import {
   Typography,
   Grid,
   Button as MaterialButton,
-} from '@material-ui/core';
+} from '@mui/material';
 import React from 'react';
 
 import { Button } from './user/Button';
@@ -20,7 +20,7 @@ export const Toolbox = () => {
         container
         direction="column"
         alignItems="center"
-        justify="center"
+        justifyContent="center"
         spacing={1}
       >
         <Box pb={2}>
