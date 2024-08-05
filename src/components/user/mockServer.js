@@ -1,18 +1,9 @@
-// mockServer.js
-
-export const mockFetchAvailableQueries = () => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(["query1", "query2", "query3", "query4"]);
-        }, 500);
-    });
-};
 
 export const mockFetchSeriesData = (payload) => {
     return new Promise((resolve) => {
         setTimeout(() => {
             const startTime = new Date('2024-08-01T00:00:00Z');
-            const dataSize = 50; // Generating data for 24 hours with 1-minute intervals
+            const dataSize = 20; // Generating data for 24 hours with 1-minute intervals
             const mockData = [];
 
             for (let i = 0; i < dataSize; i++) {
@@ -23,6 +14,6 @@ export const mockFetchSeriesData = (payload) => {
             }
 
             resolve(mockData);
-        }, 1000);
+        }, 500);
     });
 };
