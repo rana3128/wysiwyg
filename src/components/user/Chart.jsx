@@ -3,16 +3,17 @@ import { useNode } from "@craftjs/core";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { ChartSettings } from "./ChartSettings";
-import { Collapse, IconButton, Grid, Typography } from "@mui/material";
+import { Accordion, AccordionSummary, AccordionDetails, Typography, Box } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { mockFetchSeriesData } from "./mockServer";
 
 export const Chart = ({
   series,
   title = "Custom Chart",
   isCollapsed = false,
+  width = "100%", // Added width prop with default value
 }) => {
+  console.log(width);
   const {
     connectors: { connect, drag },
   } = useNode();
@@ -25,10 +26,6 @@ export const Chart = ({
       categories: [],
     },
   });
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   useEffect(() => {
     fetchData();
@@ -47,9 +44,9 @@ export const Chart = ({
     setChartOption(options);
   }, [seriesData]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setCollapsed(isCollapsed);
-  }, [isCollapsed])
+  }, [isCollapsed]);
 
   const fetchData = async () => {
     const chartData = [];
@@ -62,32 +59,25 @@ export const Chart = ({
   };
 
   const generateSeriesOption = () => {
-    return seriesData.map((srData) => {
-      return {
-        name: srData.field,
-        data: srData.data.map((d) => d.count),
-      };
-    });
+    return seriesData.map((srData) => ({
+      name: srData.field,
+      data: srData.data.map((d) => d.count),
+    }));
   };
 
   return (
-    <div ref={(ref) => connect(drag(ref))}>
-      <Grid container alignItems="center" justifyContent="space-between">
-        <Grid item>
+    <Box sx={{ width }} ref={(ref) => connect(drag(ref))}>
+      <Accordion expanded={!collapsed} onChange={() => setCollapsed(!collapsed)}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
           <Typography variant="h6">{title}</Typography>
-        </Grid>
-        <Grid item>
-          <IconButton onClick={() => setCollapsed(!collapsed)} color="primary">
-            {collapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-          </IconButton>
-        </Grid>
-      </Grid>
-      <Collapse in={!collapsed}>
-        <div style={{ width: "100%", height: "500px" }}>
-          <HighchartsReact highcharts={Highcharts} options={chartOption} />
-        </div>
-      </Collapse>
-    </div>
+        </AccordionSummary>
+        <AccordionDetails>
+          <div style={{ width: "100%" }}>
+            <HighchartsReact highcharts={Highcharts} options={chartOption} />
+          </div>
+        </AccordionDetails>
+      </Accordion>
+    </Box>
   );
 };
 
@@ -95,6 +85,7 @@ const ChartDefaultProps = {
   series: [],
   title: "Custom Chart",
   isCollapsed: false,
+  width: "100%", // Added width to default props
 };
 
 Chart.craft = {

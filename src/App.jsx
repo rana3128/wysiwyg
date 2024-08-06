@@ -11,6 +11,7 @@ import { Card, CardBottom, CardTop } from "./components/user/Card";
 import { Container } from "./components/user/Container";
 import { Text } from "./components/user/Text";
 import { Chart } from "./components/user/Chart";
+import { RowContainer } from "./components/user/RowContainer"; // Import the new component
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -33,6 +34,7 @@ export default function App() {
           CardTop,
           CardBottom,
           Chart,
+          RowContainer, // Register the new component
         }}
       >
         <Topbar />

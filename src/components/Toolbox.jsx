@@ -12,6 +12,7 @@ import { Card } from './user/Card';
 import { Container } from './user/Container';
 import { Text } from './user/Text';
 import { Chart } from './user/Chart';
+import { RowContainer } from './user/RowContainer'; // Import the RowContainer
 
 export const Toolbox = () => {
   const { connectors } = useEditor();
@@ -33,9 +34,18 @@ export const Toolbox = () => {
           <MaterialButton
             ref={(ref) => connectors.create(ref, <Chart dataSource={0} />)}
             variant="contained"
-            data-cy="toolbox-text"
+            data-cy="toolbox-chart"
           >
             Chart
+          </MaterialButton>
+        </Grid>
+        <Grid container direction="column" item>
+          <MaterialButton
+            ref={(ref) => connectors.create(ref, <Element canvas is={RowContainer} padding={0} />)}
+            variant="contained"
+            data-cy="toolbox-row-container"
+          >
+            tow chart row
           </MaterialButton>
         </Grid>
         <Grid container direction="column" item>
