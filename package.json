@@ -22,6 +22,7 @@
     "highcharts-react-official": "^3.2.1",
     "lzutf8": "0.5.5",
     "prop-types": "latest",
+    "re-resizable": "^6.9.17",
     "react": "18.2.0",
     "react-contenteditable": "3.3.3",
     "react-dom": "18.2.0"

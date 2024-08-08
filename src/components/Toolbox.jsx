@@ -45,7 +45,7 @@ export const Toolbox = () => {
             variant="contained"
             data-cy="toolbox-row-container"
           >
-            tow chart row
+            Multi_Chart
           </MaterialButton>
         </Grid>
         <Grid container direction="column" item>
