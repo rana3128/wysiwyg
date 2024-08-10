@@ -11,7 +11,6 @@ import { Card, CardBottom, CardTop } from "./components/user/Card";
 import { Container } from "./components/user/Container";
 import { Text } from "./components/user/Text";
 import { Chart } from "./components/user/Chart";
-import { RowContainer } from "./components/user/RowContainer"; // Import the new component
 import { ResizableContainer } from "./components/user/ResizableContainer"; // Import the new component
 
 const useStyles = makeStyles(() => ({
@@ -35,7 +34,6 @@ export default function App() {
           CardTop,
           CardBottom,
           Chart,
-          RowContainer,
           ResizableContainer,
         }}
       >
@@ -50,11 +48,7 @@ export default function App() {
                 background="#eeeeee"
                 data-cy="root-container"
               >
-                <Text
-                  fontSize={20}
-                  text="Hi world! Add more components"
-                  data-cy="frame-text"
-                />
+                
               </Element>
             </Frame>
           </Grid>
