@@ -6,12 +6,13 @@ import {
   FormLabel,
   IconButton,
   Collapse,
+  TextField,
 } from "@mui/material";
 import React, { useState } from "react";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
-export const Container = ({ background, padding, children, ...props }) => {
+export const Container = ({ background, padding, title, children, ...props }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const {
@@ -43,7 +44,7 @@ export const Container = ({ background, padding, children, ...props }) => {
           alignItems: "center",
         }}
       >
-        <FormLabel component="legend">Container</FormLabel>
+        <FormLabel component="legend">{title}</FormLabel>
         <IconButton onClick={handleToggleCollapse}>
           {isCollapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
         </IconButton>
@@ -59,18 +60,26 @@ export const Container = ({ background, padding, children, ...props }) => {
 
 export const ContainerSettings = () => {
   const {
-    background,
+    title,
     padding,
     actions: { setProp },
   } = useNode((node) => ({
-    background: node.data.props.background,
+    title: node.data.props.title,
     padding: node.data.props.padding,
   }));
 
   return (
     <>
       <FormControl fullWidth margin="normal" component="fieldset">
-        <FormLabel component="legend">Background</FormLabel>
+        <FormLabel component="legend">Title</FormLabel>
+        <TextField
+          value={title}
+          onChange={(e) =>
+            setProp((props) => (props.title = e.target.value), 500)
+          }
+          variant="outlined"
+          fullWidth
+        />
       </FormControl>
       <FormControl fullWidth margin="normal" component="fieldset">
         <FormLabel component="legend">Padding</FormLabel>
@@ -86,6 +95,7 @@ export const ContainerSettings = () => {
 };
 
 export const ContainerDefaultProps = {
+  title: "Container",
   background: "#ffffff",
   padding: 3,
 };

@@ -12,6 +12,7 @@ import { Container } from "./components/user/Container";
 import { Text } from "./components/user/Text";
 import { Chart } from "./components/user/Chart";
 import { ResizableContainer } from "./components/user/ResizableContainer"; // Import the new component
+import {MainContainer} from "./components/user/MainContainer";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -35,6 +36,7 @@ export default function App() {
           CardBottom,
           Chart,
           ResizableContainer,
+          MainContainer
         }}
       >
         <Topbar />
@@ -43,7 +45,7 @@ export default function App() {
             <Frame>
               <Element
                 canvas
-                is={Container}
+                is={MainContainer}
                 padding={5}
                 background="#eeeeee"
                 data-cy="root-container"
