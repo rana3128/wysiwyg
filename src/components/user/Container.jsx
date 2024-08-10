@@ -1,19 +1,34 @@
-import { useNode } from '@craftjs/core';
-import { Slider, Paper, FormControl, FormLabel } from '@mui/material';
-import React from 'react';
+import { useNode } from "@craftjs/core";
+import {
+  Slider,
+  Box,
+  FormControl,
+  FormLabel,
+} from "@mui/material";
+import React, { useState } from "react";
 
 export const Container = ({ background, padding, children, ...props }) => {
   const {
     connectors: { connect, drag },
   } = useNode();
   return (
-    <Paper
-      {...props}
+    <Box
+      sx={{
+        display: "flex",
+        flexWrap: "wrap",
+        width: "98%",
+        gap: "10px", // Add margin between the charts
+      }}
       ref={(ref) => connect(drag(ref))}
-      style={{ margin: '5px 0', background, padding: `${padding}px` }}
+      style={{
+        margin: "5px 0",
+        background: "transparent",
+        padding: `10px`,
+        border: "1px solid #dad5d5",
+      }}
     >
       {children}
-    </Paper>
+    </Box>
   );
 };
 
@@ -28,7 +43,7 @@ export const ContainerSettings = () => {
   }));
 
   return (
-    <div>
+    <>
       <FormControl fullWidth margin="normal" component="fieldset">
         <FormLabel component="legend">Background</FormLabel>
       </FormControl>
@@ -41,12 +56,12 @@ export const ContainerSettings = () => {
           }
         />
       </FormControl>
-    </div>
+    </>
   );
 };
 
 export const ContainerDefaultProps = {
-  background: '#ffffff',
+  background: "#ffffff",
   padding: 3,
 };
 

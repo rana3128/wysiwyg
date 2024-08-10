@@ -3,9 +3,16 @@ import { useNode } from "@craftjs/core";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { ChartSettings } from "./ChartSettings";
-import { Accordion, AccordionSummary, AccordionDetails, Typography, Box } from "@mui/material";
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
+  Box,
+} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { mockFetchSeriesData } from "./mockServer";
+import { ResizableContainer } from "./ResizableContainer";
 
 export const Chart = ({
   series,
@@ -13,14 +20,13 @@ export const Chart = ({
   isCollapsed = false,
   width = "100%", // Added width prop with default value
 }) => {
-  console.log(width);
   const {
     connectors: { connect, drag },
   } = useNode();
   const [seriesData, setSeriesData] = useState([]);
   const [collapsed, setCollapsed] = useState(isCollapsed);
   const [chartOption, setChartOption] = useState({
-    title: { text: '' }, // Remove title from the chart
+    title: { text: "" }, // Remove title from the chart
     series: [],
     xAxis: {
       categories: [],
@@ -33,11 +39,14 @@ export const Chart = ({
 
   useEffect(() => {
     const options = {
-      title: { text: '' }, // Remove title from the chart
+      title: { text: "" }, // Remove title from the chart
       series: generateSeriesOption(),
       xAxis: {
         categories: seriesData?.[0]?.data?.map(
-          (d) => `${new Date(d.time_from).getMinutes()} - ${new Date(d.time_to).getMinutes()}`
+          (d) =>
+            `${new Date(d.time_from).getMinutes()} - ${new Date(
+              d.time_to
+            ).getMinutes()}`
         ),
       },
     };
@@ -66,18 +75,13 @@ export const Chart = ({
   };
 
   return (
-    <Box sx={{ width }} ref={(ref) => connect(drag(ref))}>
-      <Accordion expanded={!collapsed} onChange={() => setCollapsed(!collapsed)}>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
-          <Typography variant="h6">{title}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <div style={{ width: "100%" }}>
-            <HighchartsReact highcharts={Highcharts} options={chartOption} />
-          </div>
-        </AccordionDetails>
-      </Accordion>
-    </Box>
+    <ResizableContainer ref={(ref) => connect(drag(ref))}>
+      <Box sx={{ width }} >
+        <div style={{ width: "100%" }}>
+          <HighchartsReact highcharts={Highcharts} options={chartOption} />
+        </div>
+      </Box>
+    </ResizableContainer>
   );
 };
 
