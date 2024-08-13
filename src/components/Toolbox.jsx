@@ -12,6 +12,7 @@ import { Card } from './user/Card';
 import { Container } from './user/Container';
 import { Text } from './user/Text';
 import { Chart } from './user/Chart';
+import { CustomTable } from './user/Table';
 
 export const Toolbox = () => {
   const { connectors } = useEditor();
@@ -31,11 +32,34 @@ export const Toolbox = () => {
         </Box>
         <Grid container direction="column" item>
           <MaterialButton
+            ref={(ref) =>
+              connectors.create(
+                ref,
+                <Element canvas is={Container} padding={20} />
+              )
+            }
+            variant="contained"
+            data-cy="toolbox-container"
+          >
+            Container
+          </MaterialButton>
+        </Grid>
+        <Grid container direction="column" item>
+          <MaterialButton
             ref={(ref) => connectors.create(ref, <Chart dataSource={0} />)}
             variant="contained"
             data-cy="toolbox-chart"
           >
             Chart
+          </MaterialButton>
+        </Grid>
+        <Grid container direction="column" item>
+          <MaterialButton
+            ref={(ref) => connectors.create(ref, <CustomTable dataSource={0} />)}
+            variant="contained"
+            data-cy="toolbox-chart"
+          >
+            Table
           </MaterialButton>
         </Grid>
         <Grid container direction="column" item>
@@ -56,20 +80,6 @@ export const Toolbox = () => {
             data-cy="toolbox-text"
           >
             Text
-          </MaterialButton>
-        </Grid>
-        <Grid container direction="column" item>
-          <MaterialButton
-            ref={(ref) =>
-              connectors.create(
-                ref,
-                <Element canvas is={Container} padding={20} />
-              )
-            }
-            variant="contained"
-            data-cy="toolbox-container"
-          >
-            Container
           </MaterialButton>
         </Grid>
         <Grid container direction="column" item>

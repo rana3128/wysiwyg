@@ -3,28 +3,19 @@ import { useNode } from "@craftjs/core";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { ChartSettings } from "./ChartSettings";
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Typography,
-  Box,
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Box } from "@mui/material";
 import { mockFetchSeriesData } from "./mockServer";
 import { ResizableContainer } from "./ResizableContainer";
 
 export const Chart = ({
   series,
   title = "Custom Chart",
-  isCollapsed = false,
   width = "100%", // Added width prop with default value
 }) => {
   const {
     connectors: { connect, drag },
   } = useNode();
   const [seriesData, setSeriesData] = useState([]);
-  const [collapsed, setCollapsed] = useState(isCollapsed);
   const [chartOption, setChartOption] = useState({
     title: { text: "" }, // Remove title from the chart
     series: [],
@@ -39,7 +30,7 @@ export const Chart = ({
 
   useEffect(() => {
     const options = {
-      title: { text: "" }, // Remove title from the chart
+      title: { text: title },
       series: generateSeriesOption(),
       xAxis: {
         categories: seriesData?.[0]?.data?.map(
@@ -52,10 +43,6 @@ export const Chart = ({
     };
     setChartOption(options);
   }, [seriesData]);
-
-  useEffect(() => {
-    setCollapsed(isCollapsed);
-  }, [isCollapsed]);
 
   const fetchData = async () => {
     const chartData = [];
@@ -76,7 +63,7 @@ export const Chart = ({
 
   return (
     <ResizableContainer ref={(ref) => connect(drag(ref))}>
-      <Box sx={{ width }} >
+      <Box sx={{ width }}>
         <div style={{ width: "100%" }}>
           <HighchartsReact highcharts={Highcharts} options={chartOption} />
         </div>

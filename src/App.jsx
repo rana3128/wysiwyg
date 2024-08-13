@@ -12,7 +12,8 @@ import { Container } from "./components/user/Container";
 import { Text } from "./components/user/Text";
 import { Chart } from "./components/user/Chart";
 import { ResizableContainer } from "./components/user/ResizableContainer"; // Import the new component
-import {MainContainer} from "./components/user/MainContainer";
+import { MainContainer } from "./components/user/MainContainer";
+import { CustomTable } from "./components/user/Table";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -36,7 +37,8 @@ export default function App() {
           CardBottom,
           Chart,
           ResizableContainer,
-          MainContainer
+          MainContainer,
+          CustomTable,
         }}
       >
         <Topbar />
@@ -49,9 +51,7 @@ export default function App() {
                 padding={5}
                 background="#eeeeee"
                 data-cy="root-container"
-              >
-                
-              </Element>
+              ></Element>
             </Frame>
           </Grid>
           <Grid item xs={2}>

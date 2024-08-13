@@ -10,7 +10,7 @@ export const MainContainer = ({ background, padding, children, ...props }) => {
     <Paper
       {...props}
       ref={(ref) => connect(drag(ref))}
-      style={{ margin: '5px 0', background, padding: `${padding}px` }}
+      style={{ margin: '5px 0', background, padding: `${padding}px`, minHeight: '500px' }}
     >
       {children}
     </Paper>
