@@ -40,7 +40,7 @@ export const CustomTable = ({
 
   return (
     <ResizableContainer ref={(ref) => connect(drag(ref))}>
-      <Box sx={{ width }}>
+      <Box sx={12}>
         <Typography variant="h6" gutterBottom>
           {title}
         </Typography>

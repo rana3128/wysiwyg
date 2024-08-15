@@ -1,116 +1,112 @@
-import React, { useRef, useState, useCallback, useEffect } from "react";
-import { useNode, useEditor } from "@craftjs/core";
-import { Resizable } from "re-resizable";
-import debounce from "debounce";
+import React, { useMemo, useEffect, useState, useRef } from 'react';
+import { useNode } from '@craftjs/core';
+import { Responsive, WidthProvider } from 'react-grid-layout';
+import 'react-grid-layout/css/styles.css';
+import 'react-resizable/css/styles.css';
+import Highcharts from 'highcharts';
 
-const Resizer = ({ propKey, children, ...props }) => {
+const ResponsiveGridLayout = WidthProvider(Responsive);
+
+const Resizer = ({ children }) => {
   const {
+    connectors: { connect, drag },
     actions: { setProp },
-    connectors: { connect },
     nodeWidth,
-    nodeHeight,
-    active,
-    inNodeContext,
   } = useNode((node) => ({
-    active: node.events.selected,
-    nodeWidth: node.data.props[propKey.width],
-    nodeHeight: node.data.props[propKey.height],
+    nodeWidth: node.data.props.width || 4,
   }));
 
-  const resizable = useRef(null);
-  const isResizing = useRef(false);
-  const editingDimensions = useRef(null);
-  const nodeDimensions = useRef(null);
-  nodeDimensions.current = { width: nodeWidth, height: nodeHeight };
+  const containerRef = useRef(null); // Ref to measure container height
+  const [containerHeight, setContainerHeight] = useState(350); // Default height
 
-  const [internalDimensions, setInternalDimensions] = useState({
-    width: nodeWidth,
-    height: nodeHeight,
-  });
+  const layout = useMemo(
+    () => [
+      {
+        i: '1',
+        x: 0,
+        y: 0,
+        w: nodeWidth,
+        h: Math.ceil(containerHeight / 30), // Calculate height in rows
+        minW: 4,
+        maxW: 12,
+        isResizable: true,
+        isDraggable: false,
+        static: true,
+      },
+    ],
+    [nodeWidth, containerHeight]
+  );
 
-  const updateInternalDimensionsInPx = useCallback(() => {
-    const { width: nodeWidth, height: nodeHeight } = nodeDimensions.current;
-
-    setInternalDimensions({
-      width: nodeWidth,
-      height: nodeHeight,
+  const handleResizeStop = (layout) => {
+    const updatedWidth = layout[0].w;
+    
+    setProp((props) => {
+      props.width = updatedWidth;
     });
-  }, []);
 
-  const updateInternalDimensionsWithOriginal = useCallback(() => {
-    const { width: nodeWidth, height: nodeHeight } = nodeDimensions.current;
-    setInternalDimensions({
-      width: nodeWidth,
-      height: nodeHeight,
-    });
-  }, []);
-
-  useEffect(() => {
-    if (!isResizing.current) updateInternalDimensionsWithOriginal();
-  }, [nodeWidth, nodeHeight, updateInternalDimensionsWithOriginal]);
-
-  useEffect(() => {
-    const listener = debounce(updateInternalDimensionsWithOriginal, 1);
-    window.addEventListener("resize", listener);
-
-    return () => {
-      window.removeEventListener("resize", listener);
-    };
-  }, [updateInternalDimensionsWithOriginal]);
-
-  const getUpdatedDimensions = (width, height) => {
-    const dom = resizable.current.resizable;
-    if (!dom) return;
-
-    const currentWidth = parseInt(editingDimensions.current.width),
-      currentHeight = parseInt(editingDimensions.current.height);
-
-    return {
-      width: currentWidth + parseInt(width),
-      height: currentHeight + parseInt(height),
-    };
+    // Trigger chart redraw after resizing
+    setTimeout(() => {
+      Highcharts.charts.forEach(chart => {
+        if (chart) {
+          chart.reflow(); // Redraw the chart to fit the new container size
+        }
+      });
+    }, 300); // Add a slight delay to ensure the DOM updates
   };
 
+  useEffect(() => {
+    // Initial chart render
+    Highcharts.charts.forEach(chart => {
+      if (chart) {
+        chart.reflow(); // Ensure chart is rendered correctly on initial load
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    // Update the container height based on the content's height
+    if (containerRef.current) {
+      setContainerHeight(containerRef.current.scrollHeight);
+    }
+  }, [children]);
+
   return (
-    <Resizable
-      enable={{ right: true }}
-      ref={(ref) => {
-        if (ref) {
-          resizable.current = ref;
-          connect(resizable.current.resizable);
-        }
+    <ResponsiveGridLayout
+      autoSize={true}
+      width={1200}
+      rowHeight={30}
+      layouts={{ lg: layout }}
+      allowOverlap={false}
+      className="layout"
+      cols={{ lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }}
+      breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+      onResizeStop={(currentLayout, oldItem, newItem) => {
+        handleResizeStop([newItem]);
       }}
-      size={internalDimensions}
-      onResizeStart={(e) => {
-        updateInternalDimensionsInPx();
-        e.preventDefault();
-        e.stopPropagation();
-        const dom = resizable.current.resizable;
-        if (!dom) return;
-        editingDimensions.current = {
-          width: dom.getBoundingClientRect().width,
-          height: dom.getBoundingClientRect().height,
-        };
-        isResizing.current = true;
-      }}
-      onResize={(e, direction, ref, d) => {
-        const dom = resizable.current.resizable;
-        let { width } = getUpdatedDimensions(d.width, 0);
-
-        width = `${width}px`;
-
-        setProp((prop) => {
-          prop[propKey.width] = width;
-        }, 500);
-      }}
-      onResizeStop={() => {
-        isResizing.current = false;
-        updateInternalDimensionsWithOriginal();
-      }}
-      {...props}
+      isDraggable={false}
+      resizeHandles={['e']}
+      isResizable={true}
     >
-      {children}
-    </Resizable>
+      <div
+        key="1"
+        ref={(ref) => {
+          connect(drag(ref));
+          containerRef.current = ref;
+        }}
+        style={{
+          border: '1px solid #ccc',
+          padding: '10px',
+          boxSizing: 'border-box',
+          overflow: 'hidden',
+          height: `${containerHeight}px`, // Dynamic height based on content
+          width: '100%',
+        }}
+      >
+        <div style={{ width: '100%', height: '100%' }}>
+          {children}
+        </div>
+      </div>
+    </ResponsiveGridLayout>
   );
 };
 
