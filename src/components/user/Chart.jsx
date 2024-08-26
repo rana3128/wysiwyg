@@ -63,7 +63,7 @@ export const Chart = ({
 
   return (
     <ResizableContainer ref={(ref) => connect(drag(ref))}>
-      <Box sx={{ width }}>
+      <Box sx={12}>
         <div style={{ width: "100%" }}>
           <HighchartsReact highcharts={Highcharts} options={chartOption} />
         </div>

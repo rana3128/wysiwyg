@@ -1,0 +1,89 @@
+{
+    "ROOT": {
+        "type": {
+            "resolvedName": "Container"
+        },
+        "isCanvas": true,
+        "props": {
+            "background": "#eeeeee",
+            "padding": 5,
+            "data-cy": "root-container"
+        },
+        "displayName": "Container",
+        "custom": {},
+        "hidden": false,
+        "nodes": [
+            "t5ArRAKTGf",
+            "IM1I49FSxb",
+            "srt-QX8FSG"
+        ],
+        "linkedNodes": {}
+    },
+    "oF37UH9_de": {
+        "type": {
+            "resolvedName": "Text"
+        },
+        "isCanvas": false,
+        "props": {
+            "text": "Hi world! Add more components",
+            "fontSize": 20,
+            "data-cy": "frame-text"
+        },
+        "displayName": "Text",
+        "custom": {},
+        "parent": "ROOT",
+        "hidden": false,
+        "nodes": [],
+        "linkedNodes": {}
+    },
+    "t5ArRAKTGf": {
+        "type": {
+            "resolvedName": "Text"
+        },
+        "isCanvas": false,
+        "props": {
+            "text": "Hi world! Add more components",
+            "fontSize": 35,
+            "data-cy": "frame-text"
+        },
+        "displayName": "Text",
+        "custom": {},
+        "parent": "ROOT",
+        "hidden": false,
+        "nodes": [],
+        "linkedNodes": {}
+    },
+    "IM1I49FSxb": {
+        "type": {
+            "resolvedName": "Button"
+        },
+        "isCanvas": false,
+        "props": {
+            "size": "small",
+            "variant": "contained",
+            "color": "primary",
+            "text": "Click me"
+        },
+        "displayName": "Button",
+        "custom": {},
+        "parent": "ROOT",
+        "hidden": false,
+        "nodes": [],
+        "linkedNodes": {}
+    },
+    "srt-QX8FSG": {
+        "type": {
+            "resolvedName": "Chart"
+        },
+        "isCanvas": false,
+        "props": {
+            "dataSource": 0
+        },
+        "displayName": "Chart",
+        "custom": {},
+        "parent": "ROOT",
+        "hidden": false,
+        "nodes": [],
+        "linkedNodes": {}
+    }
+}
