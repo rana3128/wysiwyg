@@ -16,7 +16,7 @@ export const Container = ({ background, padding, title, children, ...props }) =>
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const {
-    connectors: { connect, drag },
+    connectors: { connect },
   } = useNode();
 
   const handleToggleCollapse = () => {
@@ -35,7 +35,7 @@ export const Container = ({ background, padding, title, children, ...props }) =>
         padding: "10px",
         background: "transparent",
       }}
-      ref={(ref) => connect(drag(ref))}
+      ref={(ref) => connect(ref)}
     >
       <Box
         sx={{

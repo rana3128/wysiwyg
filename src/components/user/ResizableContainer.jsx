@@ -6,7 +6,7 @@ export const ResizableContainer = ({ children }) => {
   const { connectors: { connect } } = useNode();
 
   return (
-    <Resizer propKey={{ width: 'width' }}>
+    <Resizer propKey={{ width: '100%' }}>
       <div ref={ref => connect(ref)} style={{ width: '100%' }}>
         {children}
       </div>

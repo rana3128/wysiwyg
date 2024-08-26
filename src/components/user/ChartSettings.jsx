@@ -13,15 +13,17 @@ export const ChartSettings = () => {
   const [source, setSource] = useState('');
   const [field, setField] = useState('');
   const [title, setTitle] = useState(props.title || 'Custom Chart');
+  const [width, setWidth] = useState("100%");
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [series, setSeries] = useState([]);
 
   useEffect(() => {
     setProp((props) => {
       props.title = title;
+      props.width = width;
       props.isCollapsed = isCollapsed;
     });
-  }, [title, isCollapsed]);
+  }, [width, title, isCollapsed]);
 
   const addSeries = () => {
     if(!source || !field) return;
@@ -35,6 +37,14 @@ export const ChartSettings = () => {
 
   return (
     <Box className='chart-setting-panel' p={2}>
+       <TextField
+        label='Width'
+        value={width}
+        onChange={(e) => setWidth(e.target.value)}
+        variant='outlined'
+        fullWidth
+        margin='normal'
+      />
        <TextField
         label='Chart Title'
         value={title}

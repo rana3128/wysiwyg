@@ -39,7 +39,11 @@ export const CustomTable = ({
   };
 
   return (
-    <ResizableContainer ref={(ref) => connect(drag(ref))}>
+    <div ref={(ref) => connect(ref)} style={{ 
+      width: `calc(${width} - 10px)`,
+      backgroundColor: "white",
+      minHeight: '250px'
+      }}>
       <Box sx={12}>
         <Typography variant="h6" gutterBottom>
           {title}
@@ -49,7 +53,10 @@ export const CustomTable = ({
             <TableHead>
               <TableRow>
                 {headers.map((header) => (
-                  <TableCell key={header.id} align={header.id === 'name' ? 'left' : 'right'}>
+                  <TableCell
+                    key={header.id}
+                    align={header.id === "name" ? "left" : "right"}
+                  >
                     {header.label}
                   </TableCell>
                 ))}
@@ -59,10 +66,13 @@ export const CustomTable = ({
               {tableRows.map((row, index) => (
                 <TableRow
                   key={index}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   {headers.map((header) => (
-                    <TableCell key={header.id} align={header.id === 'name' ? 'left' : 'right'}>
+                    <TableCell
+                      key={header.id}
+                      align={header.id === "name" ? "left" : "right"}
+                    >
                       {row[header.id]}
                     </TableCell>
                   ))}
@@ -72,7 +82,7 @@ export const CustomTable = ({
           </Table>
         </TableContainer>
       </Box>
-    </ResizableContainer>
+    </div>
   );
 };
 

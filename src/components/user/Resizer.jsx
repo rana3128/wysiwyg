@@ -35,9 +35,9 @@ const Resizer = ({ propKey, children, ...props }) => {
 
     const widthPercent = (currentWidth / parentCoainterWidth.current) * 100;
 
-    if (widthPercent <= 50) return '40%';
-    if (widthPercent <= 70) return '60%';
-    if (widthPercent <= 90) return '80%';
+    if (widthPercent <= 50) return '38%';
+    if (widthPercent <= 70) return '58%';
+    if (widthPercent <= 90) return '78%';
     return '100%';
   };
 

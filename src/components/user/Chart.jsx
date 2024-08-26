@@ -6,6 +6,7 @@ import { ChartSettings } from "./ChartSettings";
 import { Box } from "@mui/material";
 import { mockFetchSeriesData } from "./mockServer";
 import { ResizableContainer } from "./ResizableContainer";
+import Resizer from "./Resizer"; // Import the Resizer component
 
 export const Chart = ({
   series,
@@ -13,7 +14,7 @@ export const Chart = ({
   width = "100%", // Added width prop with default value
 }) => {
   const {
-    connectors: { connect, drag },
+    connectors: { connect },
   } = useNode();
   const [seriesData, setSeriesData] = useState([]);
   const [chartOption, setChartOption] = useState({
@@ -62,13 +63,9 @@ export const Chart = ({
   };
 
   return (
-    <ResizableContainer ref={(ref) => connect(drag(ref))}>
-      <Box sx={12}>
-        <div style={{ width: "100%" }}>
-          <HighchartsReact highcharts={Highcharts} options={chartOption} />
-        </div>
-      </Box>
-    </ResizableContainer>
+    <div ref={(ref) => connect(ref)} style={{ width: `calc(${width} - 10px)` }}>
+      <HighchartsReact highcharts={Highcharts} options={chartOption} />
+    </div>
   );
 };
 

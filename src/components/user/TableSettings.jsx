@@ -10,6 +10,7 @@ export const TableSettings = () => {
 
   const [dataSource, setDataSource] = useState(props.dataSource || "");
   const [title, setTitle] = useState(props.title || "Custom Table");
+  const [width, setWidth] = useState("100%");
 
   const applyDataSource = () => {
     setProp((props) => {
@@ -20,11 +21,20 @@ export const TableSettings = () => {
   useEffect(() => {
     setProp((props) => {
       props.title = title;
+      props.width = width;
     });
-  }, [title]);
+  }, [title, width]);
 
   return (
     <Box p={2}>
+      <TextField
+        label='Width'
+        value={width}
+        onChange={(e) => setWidth(e.target.value)}
+        variant='outlined'
+        fullWidth
+        margin='normal'
+      />
       <TextField
         label="Table Title"
         value={title}
