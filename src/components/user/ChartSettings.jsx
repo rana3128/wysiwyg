@@ -53,17 +53,7 @@ export const ChartSettings = () => {
         fullWidth
         margin='normal'
       />
-      <FormControlLabel
-        control={
-          <Switch
-            checked={isCollapsed}
-            onChange={(e) => setIsCollapsed(e.target.checked)}
-            color='primary'
-          />
-        }
-        label='Collapse Chart Initially'
-      />
-
+  
       {series.map(sr => <>{sr.source} {sr.field} <br /></>)}
 
       <TextField

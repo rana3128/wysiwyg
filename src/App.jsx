@@ -1,7 +1,10 @@
+import React, { useState } from "react";
 import { Editor, Frame, Element } from "@craftjs/core";
-import { Typography, Paper, Grid } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import React from "react";
+import { Box, Drawer, CssBaseline, AppBar as MuiAppBar, Toolbar, Typography, IconButton, Divider } from "@mui/material";
+import { styled, useTheme } from "@mui/material/styles";
+import MenuIcon from "@mui/icons-material/Menu";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 import { SettingsPanel } from "./components/SettingsPanel";
 import { Toolbox } from "./components/Toolbox";
@@ -11,22 +14,71 @@ import { Card, CardBottom, CardTop } from "./components/user/Card";
 import { Container } from "./components/user/Container";
 import { Text } from "./components/user/Text";
 import { Chart } from "./components/user/Chart";
-import { ResizableContainer } from "./components/user/ResizableContainer"; // Import the new component
+import { ResizableContainer } from "./components/user/ResizableContainer";
 import { MainContainer } from "./components/user/MainContainer";
 import { CustomTable } from "./components/user/Table";
 
-const useStyles = makeStyles(() => ({
-  root: {
-    padding: 0,
-    background: "rgb(252, 253, 253)",
-  },
+const drawerWidth = 240;
+
+const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
+  ({ theme, open }) => ({
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: `-${drawerWidth}px`,
+    ...(open && {
+      transition: theme.transitions.create("margin", {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    }),
+  })
+);
+
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  transition: theme.transitions.create(["margin", "width"], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: `${drawerWidth}px`,
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
 }));
 
-export default function App() {
-  const classes = useStyles();
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  padding: theme.spacing(0, 1),
+  ...theme.mixins.toolbar,
+  justifyContent: "flex-end",
+}));
+
+export default function PersistentDrawerLeft() {
+  const theme = useTheme();
+  const [open, setOpen] = useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
   return (
-    <div style={{ margin: "0 auto", width: "100%" }}>
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
       <Editor
         resolver={{
           Card,
@@ -41,27 +93,58 @@ export default function App() {
           CustomTable,
         }}
       >
-        <Topbar />
-        <Grid container spacing={2} style={{ paddingTop: "10px" }}>
-          <Grid item xs={10}>
-            <Frame>
-              <Element
-                canvas
-                is={MainContainer}
-                padding={5}
-                background="#eeeeee"
-                data-cy="root-container"
-              ></Element>
-            </Frame>
-          </Grid>
-          <Grid item xs={2}>
-            <Paper className={classes.root}>
-              <Toolbox />
-              <SettingsPanel />
-            </Paper>
-          </Grid>
-        </Grid>
+        <AppBar position="fixed" open={open}>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{ mr: 2, ...(open && { display: "none" }) }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap component="div">
+              Craft.js Editor
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            "& .MuiDrawer-paper": {
+              width: drawerWidth,
+              boxSizing: "border-box",
+            },
+          }}
+          variant="persistent"
+          anchor="left"
+          open={open}
+        >
+          <DrawerHeader>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === "ltr" ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          <Toolbox />
+          <SettingsPanel />
+        </Drawer>
+        <Main open={open}>
+          <DrawerHeader />
+          <Topbar />
+          <Frame>
+            <Element
+              canvas
+              is={MainContainer}
+              padding={5}
+              background="#eeeeee"
+              data-cy="root-container"
+            ></Element>
+          </Frame>
+        </Main>
       </Editor>
-    </div>
+    </Box>
   );
 }
